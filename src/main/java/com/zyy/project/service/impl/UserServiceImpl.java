@@ -19,23 +19,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String saveUser(User user) {
-        Integer insert = userDao.insert(user);
-        return insert.toString();
+        userDao.insert(user);
+        return "SUCCESS";
     }
 
     @Override
     public String updateUser(User user) {
-        User queryUser=new User();
-        queryUser.setId(user.getId());
-        User userDaoOne = userDao.findOne(queryUser);
+        User userDaoOne = userDao.findById(user.getId());
         BeanUtil.copyProperties(user,userDaoOne);
-        Integer update = userDao.update(userDaoOne);
-        return update.toString();
+        userDao.update(userDaoOne);
+        return "SUCCESS";
     }
 
     @Override
-    public User findUser(User user) {
-        return userDao.findOne(user);
+    public User findUserById(String id) {
+        return userDao.findById(id);
     }
 
     @Override
@@ -44,22 +42,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findListByUser(User user) {
-        return userDao.findAll(user);
-    }
-
-    @Override
     public List<User> findListByUser(User user, Integer pageNo, Integer pageSize) {
         return userDao.findAll(user, pageNo, pageSize);
     }
 
     @Override
-    public Integer findUserCount(User user) {
-        return userDao.cont(user).intValue();
+    public Long findUserCount(User user) {
+        return userDao.cont(user);
     }
 
     @Override
-    public String deleteUserById(String id) {
-        return userDao.delete(id).toString();
+    public void deleteUserById(String id) {
+        userDao.delete(id);
     }
 }

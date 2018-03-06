@@ -39,9 +39,9 @@ public class UserController {
         return JSON.toJSONString(allUser);
     }
 
-    @RequestMapping(value = "/findUser")
-    public String findUser(User user) {
-        User userDO = userService.findUser(user);
+    @RequestMapping(value = "/findUserById")
+    public String findUserById(String id) {
+        User userDO = userService.findUserById(id);
         return JSON.toJSONString(userDO);
     }
 
@@ -49,7 +49,7 @@ public class UserController {
     public String findListByPage(User user, Integer pageNo, Integer pageSize) {
         Map<String, Object> result = Maps.newHashMap(null, null);
         List<User> listByUser = userService.findListByUser(user, pageNo, pageSize);
-        Integer userCount = userService.findUserCount(user);
+        Long userCount = userService.findUserCount(user);
         result.put("data", listByUser);
         result.put("total", userCount);
         return JSON.toJSONString(result);
@@ -60,15 +60,11 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-    @RequestMapping(value = "/findUserList")
-    public String findUserList(User user) {
-        List<User> listByUser = userService.findListByUser(user);
-        return JSON.toJSONString(listByUser);
-    }
 
     @RequestMapping(value = "/deleteById")
     public String findUserList(String id) {
-        return userService.deleteUserById(id);
+        userService.deleteUserById(id);
+        return "SUCCESS";
     }
 
 

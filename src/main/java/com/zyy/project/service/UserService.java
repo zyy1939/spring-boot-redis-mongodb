@@ -13,16 +13,14 @@ public interface UserService {
 
     String updateUser(User user);
 
-    User findUser(User user);
+    User findUserById(String id);
 
     List<User> findAllUser();
 
-    List<User> findListByUser(User user);
-
     List<User> findListByUser(User user, Integer pageNo, Integer pageSize);
 
-    Integer findUserCount(User user);
+    Long findUserCount(User user);
 
-    String deleteUserById(String id);
+    void deleteUserById(String id);
 
 }

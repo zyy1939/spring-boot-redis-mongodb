@@ -7,62 +7,14 @@ import java.util.List;
 /**
  * Created by zhaoyangyang on 2018/3/2.
  */
-public interface UserDao {
+public interface UserDao extends BaseDao<User> {
     /**
-     * 查询所有数据集合
-     */
-    List<User> findAll();
-
-    /**
-     * 根据条件查询列表
-     *
-     * @param user
-     */
-    List<User> findAll(User user);
-
-    /**
-     * 根据条件分页查询列表
-     *
-     * @param user
-     * @param pageNo
-     * @param pageSize
+     * 搜索列表
      */
     List<User> findAll(User user, int pageNo, int pageSize);
 
     /**
-     * 查询总数量
-     *
-     * @param user
+     * 搜索列表总数量
      */
     Long cont(User user);
-
-    /**
-     * 根据条件查询单条数据
-     *
-     * @param user
-     */
-    User findOne(User user);
-
-    /**
-     * 插入数据
-     *
-     * @param user
-     */
-    Integer insert(User user);
-
-    /**
-     * 修改数据
-     *
-     * @param user
-     */
-    Integer update(User user);
-
-    /**
-     * 删除数据
-     *
-     * @param id
-     */
-    Integer delete(String id);
-
-
 }
