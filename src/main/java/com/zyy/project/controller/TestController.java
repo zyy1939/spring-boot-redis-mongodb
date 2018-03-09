@@ -22,11 +22,6 @@ public class TestController {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @RequestMapping(value = "/")
-    public String index() {
-        return "hello";
-    }
-
     @RequestMapping(value = "/addName")
     public String addName() {
         redisTemplate.opsForValue().set("index_name", "Hi,this is faster redis demo,you are greet!哈哈哈，爽了吧");
