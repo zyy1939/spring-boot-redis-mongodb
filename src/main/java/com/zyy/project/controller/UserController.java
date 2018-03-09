@@ -41,7 +41,9 @@ public class UserController {
 
     @RequestMapping(value = "/findUserById")
     public String findUserById(String id) {
+        long timeMillis = System.currentTimeMillis();
         User userDO = userService.findUserById(id);
+        System.out.println("mongodb get user time : " + (System.currentTimeMillis() - timeMillis));
         return JSON.toJSONString(userDO);
     }
 

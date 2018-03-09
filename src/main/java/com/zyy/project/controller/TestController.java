@@ -1,12 +1,17 @@
 package com.zyy.project.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.zyy.project.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by zhaoyangyang on 2018/3/1.
@@ -44,21 +49,37 @@ public class TestController {
         return session.getId();
     }
 
-//    @Test
-//    public void testObj() throws Exception {
-//        User user=new User("aa@126.com", "aa", "aa123456", "aa","123");
-//        ValueOperations<String, User> operations=redisTemplate.opsForValue();
-//        operations.set("com.neox", user);
-//        operations.set("com.neo.f", user,1,TimeUnit.SECONDS);
-//        Thread.sleep(1000);
-//        //redisTemplate.delete("com.neo.f");
-//        boolean exists=redisTemplate.hasKey("com.neo.f");
-//        if(exists){
-//            System.out.println("exists is true");
-//        }else{
-//            System.out.println("exists is false");
-//        }
-//        // Assert.assertEquals("aa", operations.get("com.neo.f").getUserName());
-//    }
+    @RequestMapping("/testObject")
+    public String main(String[] ags) throws Exception {
+        String result = "";
+
+        User user = new User();
+        user.setId("1");
+        user.setAge(27);
+        user.setGmtCreate(new Date());
+        user.setMobile("15122226666");
+        user.setName("malilianmenglu");
+        user.setEmail("gjoweho@163.com");
+        user.setAddr("普吉岛 马尔代夫 吉隆坡");
+        ValueOperations<String, User> operations = redisTemplate.opsForValue();
+        operations.set("login_user", user);
+        operations.set("login_user_001", user, 5, TimeUnit.SECONDS);
+        User login_user_001 = operations.get("login_user_001");
+        System.out.println("get : " + JSON.toJSONString(login_user_001));
+        Thread.sleep(5000);
+        Object login_user_002 = redisTemplate.opsForValue().get("login_user_001");
+        System.out.println("sleep 5s after : " + JSON.toJSONString(login_user_002));
+        operations.set("login_user_001", user, 5, TimeUnit.SECONDS);
+        redisTemplate.delete("login_user_001");
+        Object login_user_003 = redisTemplate.opsForValue().get("login_user_001");
+        System.out.println("delete after : " + JSON.toJSONString(login_user_002));
+        operations.set("login_user_001", user, 5, TimeUnit.SECONDS);
+        long timeMillis = System.currentTimeMillis();
+        Object login_user_004 = redisTemplate.opsForValue().get("login_user_001");
+        System.out.println("redis get login_user_001 time : "+(System.currentTimeMillis()-timeMillis));
+        System.out.println(JSON.toJSONString(login_user_004));
+        result = JSON.toJSONString(login_user_004);
+        return result;
+    }
 
 }

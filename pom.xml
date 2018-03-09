@@ -5,7 +5,7 @@
 
     <groupId>com.zyy.project</groupId>
     <artifactId>spring-boot-redis-mongodb</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-redis-mongodb</name>
@@ -55,6 +55,10 @@
             <artifactId>fastjson</artifactId>
             <groupId>com.alibaba</groupId>
             <version>1.2.31</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
 
